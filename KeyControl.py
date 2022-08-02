@@ -3,17 +3,16 @@ import KeyPressModule as kp
 from time import sleep
 import cv2
 
-
-kp.init()
-me = Tello()
-me.connect()
-print(me.get_battery())
-# me.takeoff()
-
-me.streamon()
-
+# This module allow us to control Drone using Key
+global me
 
 def keyControl():
+    kp.init()
+    me = Tello()
+    me.connect()
+    print(me.get_battery())
+    me.takeoff()
+
     while True:
         vals = getKeyboardInput()
         me.send_rc_control(vals[0], vals[1], vals[2], vals[3])

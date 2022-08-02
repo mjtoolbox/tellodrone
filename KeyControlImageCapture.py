@@ -3,24 +3,9 @@ import KeyPressModule as kp
 import time
 import cv2
 
-
-kp.init()
-me = Tello()
-me.connect()
-print(me.get_battery())
-# me.takeoff()
+# Not working version because of the missing reference of img in getKeyBoardInput()
 global img
-
-
-def keyControl():
-    while True:
-        vals = getKeyboardInput()
-        me.send_rc_control(vals[0], vals[1], vals[2], vals[3])
-        img = me.get_frame_read().frame
-        img = cv2.resize(img, (360, 240))
-        cv2.imshow("Image", img)
-        cv2.waitKey(1)
-
+global me
 
 def getKeyboardInput():
     # Left/Right, Forward/Backward, Up/Down, Yaw Velocity
@@ -59,6 +44,21 @@ def getKeyboardInput():
 
     return [lr, fb, ud, yv]
 
+def keyControl():
+    kp.init()
+    me = Tello()
+    me.connect()
+    print(me.get_battery())
+    # me.takeoff()
+    me.streamon()
+
+    while True:
+        vals = getKeyboardInput()
+        me.send_rc_control(vals[0], vals[1], vals[2], vals[3])
+        img = me.get_frame_read().frame
+        img = cv2.resize(img, (360, 240))
+        cv2.imshow("Image", img)
+        cv2.waitKey(1)
 
 if __name__ == '__main__':
     keyControl()

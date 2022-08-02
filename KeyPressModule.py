@@ -2,7 +2,7 @@ from djitellopy import Tello
 from time import sleep
 import pygame
 
-
+# This is a module and intended to run as Module
 def init():
     pygame.init()
     win = pygame.display.set_mode((400, 400))
@@ -25,8 +25,7 @@ def getKey(keyName):
 # print(me.get_battery())
 
 
-# def usingKeys():
-#     me.
+
 
 def main():
     if getKey("LEFT"):

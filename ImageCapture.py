@@ -3,7 +3,7 @@ from time import sleep
 import logging
 import cv2
 
-
+# Capturing image using cv2 and display  in the frame
 me = Tello()
 me.connect()
 print(me.get_battery())
