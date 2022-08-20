@@ -8,6 +8,11 @@ sock.bind(('', 9000))
 
 sock.sendto(b'command', 0, tello_address)
 sock.sendto(b'battery?', 0, tello_address)
+sock.sendto(b'time?', 0, tello_address)
+sock.sendto(b'speed?', 0, tello_address)
+sock.sendto(b'wifi?', 0, tello_address)
+
+
 
 while True:
     try:
