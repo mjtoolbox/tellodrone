@@ -46,7 +46,7 @@ recvThread.start()
 while True: 
 
     try:
-        msg = input("");
+        msg = input("")
 
         if not msg:
             break  

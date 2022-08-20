@@ -22,3 +22,6 @@ while True:
         print ('\n . . .\n')
         sock.close()  
         break
+        exit()
+    except:
+        print('Unable to perform action')
