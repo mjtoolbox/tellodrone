@@ -1,2 +1,5 @@
 command
-baterry?
+battery?
+time?
+speed?
+wifi?
