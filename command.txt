@@ -1,5 +1,7 @@
 command
-battery?
-time?
-speed?
-wifi?
+takeoff
+forward 50
+right 50
+back 50
+left 50
+land

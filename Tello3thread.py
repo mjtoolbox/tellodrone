@@ -55,8 +55,9 @@ def send_fromtxt_function():
                 # Send data
                 msg = msg.encode(encoding="utf-8") 
                 sent = sock.sendto(msg, tello_address)
-                time.sleep(2)
-        msg = input("Type end to quit")
+                print("Command: ",msg)
+                time.sleep(6)
+        msg = input("Type 'end' to quit")
             
         if 'end' in msg:
             print ('Closing...')
