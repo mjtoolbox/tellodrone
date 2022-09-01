@@ -10,40 +10,10 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 tello_address = ('192.168.10.1', 8889)
 sock.bind(('', 9000))
 
-def send_function():
-    print('Checking Tello drone status')
-    sock.sendto(b'command', 0, tello_address)
-    sock.sendto(b'battery?', 0, tello_address)
-    sock.sendto(b'time?', 0, tello_address)
-    sock.sendto(b'speed?', 0, tello_address)
-    sock.sendto(b'wifi?', 0, tello_address)    
-    while True: 
-        try:
-            msg = input("")
-
-            if not msg:
-                break  
-
-            if 'end' in msg:
-                print ('Closing...')
-                sock.close()  
-                break # Break out the while loop
-
-           
-            # Send data
-            msg = msg.encode(encoding="utf-8") 
-            sent = sock.sendto(msg, tello_address)                    
-        except KeyboardInterrupt:
-            print ('\n . . .\n')
-            sock.close()  
-            break
-        except:
-            print('Unable to perform action')
-
 
 def send_fromtxt_function():
     print('Reading from txt')
-    with open('command.txt', 'r') as file:
+    with open('commandrc.txt', 'r') as file:
         commands = file.readlines()
 
     try:              
@@ -56,7 +26,7 @@ def send_fromtxt_function():
                 msg = msg.encode(encoding="utf-8") 
                 sent = sock.sendto(msg, tello_address)
                 print("Command: ",msg)
-                time.sleep(6)
+                time.sleep(3)
         msg = input("Type 'end' to quit")
             
         if 'end' in msg:
@@ -86,6 +56,5 @@ if __name__ == "__main__":
     print ('--Quit with end\r\n')
     recvThread = threading.Thread(target=receive_function)
     recvThread.start()
-    #send_function()
     send_fromtxt_function()
     
