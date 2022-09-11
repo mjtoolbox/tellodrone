@@ -1,56 +1,94 @@
-import logging
-import threading
-from time import sleep
-import KeyPressModule as kp
-import socket
+import time
+import sys
+import pygame
+import pygame.display
+import pygame.key
+import pygame.locals
+import pygame.font
+import os
+import datetime
+from tello3 import Tello
+import sys
+from datetime import datetime
+import time
+import argparse
 
-kp.init()
 
-# Simple command that send
-# Create a UDP socket
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-tello_address = ('192.168.10.1', 8889)
-sock.bind(('', 8889))
-
-def send_function():
-    print('Checking Tello drone status')
-    sock.sendto(b'command', 0, tello_address)
- 
-    while True: 
-        try:
-            msg = getKeyboardInput()
-            msg = msg.encode(encoding="utf-8") 
-            sent = sock.sendto(msg, tello_address)                    
+def keyControl():
+    init()
+    global me 
+    me = Tello()
+    me.takeoff()
+    while True:
+        try: 
+            main()
+            vals = getKeyboardInput()
+            me.send_command('rc {0} {1} {2} {3}'.format(vals[0], vals[1], vals[2], vals[3]))
+            time.sleep(0.05)
         except KeyboardInterrupt:
             print ('\n . . .\n')
-            sock.close()  
+            me.land()  
             break
-        except:
-            print('Unable to perform action')
+
+def init():
+    pygame.init()
+    win = pygame.display.set_mode((400, 400))
+
+def getKey(keyName):
+    answer = False
+    for event in pygame.event.get():
+        pass
+    keyInput = pygame.key.get_pressed()
+    myKey = getattr(pygame, 'K_{}'.format(keyName))
+    if keyInput[myKey]:
+        answer = True
+    pygame.display.update()
+
+    return answer
+
+def main():
+    if getKey("LEFT"):
+        print("Left key pressed")
+    if getKey("RIGHT"):
+        print("Right key pressed")
+    if getKey("UP"):
+        print("Up key pressed")
+    if getKey("DOWN"):
+        print("Down key pressed")
+    if getKey("b"):
+        print("Get battery")
 
 def getKeyboardInput():
-    val = ''
-    if kp.getKey("b"):
-        val = 'battery?'
-    return val
-
-
-def receive_function():
-    while True:
-        try:
-            data, ip = sock.recvfrom(1518)
-            print("{}: {}".format(ip, data.decode(encoding='utf-8')))
-        except Exception:
-            # Main thread closed the socket, so it throws an exception
-            print ('\nExit...\n')
-            sock.close()
-            exit()
-
-
-if __name__ == "__main__":
-    print ('--Start with command\r\n')
-    print ('--Quit with end\r\n')
-    recvThread = threading.Thread(target=receive_function)
-    recvThread.start()
-    send_function()
+    # Left/Right, Forward/Backward, Up/Down, Yaw Velocity
+    lr, fb, ud, yv = 0, 0, 0, 0
+    speed = 50
+    if getKey("LEFT"):
+        lr = -speed
+    elif getKey("RIGHT"):
+        lr = speed
+    if getKey("UP"):
+        fb = speed
+    if getKey("DOWN"):
+        fb = -speed
+    if getKey("w"):
+        ud = speed
+    if getKey("s"):
+        ud = -speed
+    if getKey("d"):
+        yv = speed
+    if getKey("a"):
+        yv = -speed
+        
+    if getKey("q"):
+        me.land()
+    if getKey("e"):
+        me.takeoff()
     
+    if getKey("l"):
+        me.flip("l")
+
+    return [lr, fb, ud, yv]
+
+if __name__ == '__main__':
+    keyControl()
+

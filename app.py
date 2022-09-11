@@ -24,7 +24,7 @@ def start(file_name):
     :param file_name: File name where commands are located.
     :return: None.
     """
-    start_time = str(datetime.now())
+    # start_time = str(datetime.now())
 
     with open(file_name, 'r') as f:
         commands = f.readlines()

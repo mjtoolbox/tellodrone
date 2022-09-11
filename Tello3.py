@@ -22,8 +22,9 @@ class Tello(object):
         self.tello_port = 8889
         self.tello_address = (self.tello_ip, self.tello_port)
         self.log = []
-
         self.MAX_TIME_OUT = 15.0
+        # Initiate command first
+        self.socket.sendto(b'command', self.tello_address)
 
     def send_command(self, command):
         """
@@ -78,3 +79,22 @@ class Tello(object):
         :returns: Logs.
         """
         return self.log
+    
+    def land(self):
+        """
+        Initiates landing.
+        :return: Response from Tello, 'OK' or 'FALSE'.
+        """
+        return self.send_command('land')
+
+    def takeoff(self):
+        """
+        Initiates take off.
+        :return: Response from Tello, 'OK' or 'FALSE'.
+        """
+        return self.send_command('takeoff')
+    def flip(self, direction):
+        """
+        Flip to l, r, f, b
+        """
+        return self.send_command('flip {}'.format(direction))
