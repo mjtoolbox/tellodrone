@@ -11,7 +11,7 @@ def parse_args(args):
     :param args: Arguments.
     :return: Parsed arguments.
     """
-    parser = argparse.ArgumentParser('Tello Flight Commander', 
+    parser = argparse.ArgumentParser('Tello command', 
         epilog='Test flight')
 
     parser.add_argument('-f', '--file', help='command file', required=True)

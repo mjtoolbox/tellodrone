@@ -39,16 +39,18 @@ class Tello(object):
         
         self.socket.sendto(command.encode('utf-8'), self.tello_address)
         print(f'sending command: {command} to {self.tello_ip}')
-
-        start = time.time()
-        while not self.log[-1].got_response():
-            now = time.time()
-            diff = now - start
-            if diff > self.MAX_TIME_OUT:
-                print(f'Max timeout exceeded... command {command}')
-                return
-        print(f'Done!!! sent command: {command} to {self.tello_ip}')
-
+        if command.startswith('rc'):
+            print(f'Done!!! rc command sent: {command} to {self.tello_ip}')
+        else:
+            start = time.time()
+            while not self.log[-1].got_response():
+                now = time.time()
+                diff = now - start
+                if diff > self.MAX_TIME_OUT:
+                    print(f'Max timeout exceeded... command {command}')
+                    return
+            print(f'Done!!! sent command: {command} to {self.tello_ip}')
+   
     def _receive_thread(self):
         """
         Listen to responses from the Tello.
