@@ -1,4 +1,3 @@
-from djitellopy import Tello
 from time import sleep
 import pygame
 
@@ -20,11 +19,6 @@ def getKey(keyName):
 
     return answer
 
-# me = Tello()
-# me.connect()
-# print(me.get_battery())
-
-
 
 
 def main():
@@ -36,6 +30,8 @@ def main():
         print("Up key pressed")
     if getKey("DOWN"):
         print("Down key pressed")
+    if getKey("b"):
+        print("Get battery")
 
 
 if __name__ == '__main__':

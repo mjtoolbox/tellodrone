@@ -1,2 +1,4 @@
 command
-battery?
+takeoff
+delay 5
+land

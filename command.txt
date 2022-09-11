@@ -1,7 +1,12 @@
 command
 takeoff
+delay 3
 forward 50
+delay 3
 right 50
+delay 3
 back 50
+delay 3
 left 50
+delay 3
 land

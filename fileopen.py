@@ -1,4 +1,5 @@
-
+from datetime import datetime
+import time
 import logging
 
 def file_open():
@@ -19,8 +20,14 @@ def file_read():
         for command in commands:
             print(command)
 
+def file_write():
+    with open(f'log/{time.time()}.log', 'w') as out:
+        log = ['hello','there']        
+        for stat in log:
+            out.write(stat)
 
 if __name__ == '__main__':
     # file_open()
     # file_open_with()
-    file_read()
+    #file_read()
+    file_write()

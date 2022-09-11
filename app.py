@@ -42,7 +42,8 @@ def start(file_name):
             else:               
                 tello.send_command(command)
 
-    with open(f'log/{start_time}.txt', 'w') as out:
+    # with open(f'log/{start_time}.txt', 'w') as out:
+    with open(f'log/{time.time()}.log', 'w') as out:
         log = tello.get_log()
 
         for stat in log:
