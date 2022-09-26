@@ -21,8 +21,8 @@ def keyControl():
     me.takeoff()
     while True:
         try: 
-            main()
-            vals = getKeyboardInput()
+            printKey()
+            vals = convertKeytoRCvalues()
             me.send_command('rc {0} {1} {2} {3}'.format(vals[0], vals[1], vals[2], vals[3]))
             time.sleep(0.05)
         except KeyboardInterrupt:
@@ -46,7 +46,7 @@ def getKey(keyName):
 
     return answer
 
-def main():
+def printKey():
     if getKey("LEFT"):
         print("Left key pressed")
     if getKey("RIGHT"):
@@ -58,7 +58,7 @@ def main():
     if getKey("b"):
         print("Get battery")
 
-def getKeyboardInput():
+def convertKeytoRCvalues():
     # Left/Right, Forward/Backward, Up/Down, Yaw Velocity
     lr, fb, ud, yv = 0, 0, 0, 0
     speed = 50
