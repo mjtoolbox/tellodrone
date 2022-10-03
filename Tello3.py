@@ -38,11 +38,13 @@ class Tello(object):
         """
         self.log.append(Stats(command, len(self.log)))
         
-        self.socket.sendto(command.encode('utf-8'), self.tello_address)
-        print(f'sending command: {command} to {self.tello_ip}')
         if command.startswith('rc'):
+            self.socket.sendto(command.encode('utf-8'), self.tello_address)
+            print(f'sending command: {command} to {self.tello_ip}')
             print(f'Done!!! rc command sent: {command} to {self.tello_ip}')
         else:
+            self.socket.sendto(command.encode('utf-8'), self.tello_address)
+            print(f'sending command: {command} to {self.tello_ip}')
             start = time.time()
             while not self.log[-1].got_response():
                 now = time.time()
